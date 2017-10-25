@@ -27,6 +27,11 @@ bool exitThreadArray[MAX_THREAD_COUNT];  //Marks exited threads
 
 TimeSortedWaitQueue *sleepQueueHead;    // Needed to implement SC_Sleep
 
+//Edited_Assignment2_Start
+int CPUburstStartTime=0;
+int CPUburstEndTime=0;
+//Edited_Assignment2_Stop
+
 #ifdef FILESYS_NEEDED
 FileSystem  *fileSystem;
 #endif
@@ -78,7 +83,7 @@ TimerInterruptHandler(int dummy)
         }
         //printf("[%d] Timer interrupt.\n", stats->totalTicks);
         //Edited_Assignment2_Start
-        if(schedulerAlgo!=1)
+        if(scheduler->schedulerAlgo!=1)
         interrupt->YieldOnReturn();
         //Edited_Assignment2_Stop
 

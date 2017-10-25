@@ -31,7 +31,7 @@ ProcessScheduler::ProcessScheduler()
 {
     listOfReadyThreads = new List;
     // Edited_Assignment2_Start
-    schedulerAlgo = 1;
+    scheduler->schedulerAlgo = 1;
     // Edited_Assignment2_Stop
 }
 
@@ -124,6 +124,10 @@ ProcessScheduler::ScheduleThread (NachOSThread *nextThread)
 
     currentThread = nextThread;		    // switch to the next thread
     currentThread->setStatus(RUNNING);      // nextThread is now running
+
+    //Edited_Assignment2_Start
+    CPUburstStartTime=stats->totalTicks;
+    //Edited_Assignment2_Stop
 
     DEBUG('t', "Switching from thread \"%s\" with pid %d to thread \"%s\" with pid %d\n",
 	  oldThread->getName(), oldThread->GetPID(), nextThread->getName(), nextThread->GetPID());
