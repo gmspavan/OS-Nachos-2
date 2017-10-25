@@ -320,7 +320,7 @@ NachOSThread::YieldCPU ()
 void
 NachOSThread::PutThreadToSleep ()
 {
-    NachOSThread *nextThread123;
+    NachOSThread *nextThread;
 
     ASSERT(this == currentThread);
     ASSERT(interrupt->getLevel() == IntOff);
