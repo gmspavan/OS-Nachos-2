@@ -47,6 +47,7 @@ void LaunchThreads(char *fileName)
   while(!feof(file))
   {
     //Code for file parsing
+        i=0,j=0;
         fileName_given = 0;
     		priority_given = 0;
         temp = fgetc(file);
