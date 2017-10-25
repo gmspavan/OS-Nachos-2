@@ -73,7 +73,10 @@ ProcessScheduler::MoveThreadToReadyQueue (NachOSThread *thread)
     DEBUG('t', "Putting thread %s with PID %d on ready list.\n", thread->getName(), thread->GetPID());
 
     thread->setStatus(READY);
-    listOfReadyThreads->SortedInsert((void *)thread, thread->getPriority());
+    //Edited_Assignment2_Start
+    if(schedulerAlgo==1) listOfReadyThreads->Append((void *)thread);
+    else listOfReadyThreads->SortedInsert((void *)thread, thread->getPriority());
+    //Edited_Assignment2_Stop
 }
 
 //----------------------------------------------------------------------
