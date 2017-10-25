@@ -245,6 +245,12 @@ NachOSThread::Exit (bool terminateSim, int exitcode)
     NachOSThread *nextThread;
 
     status = BLOCKED;
+    //Edited_Assignment2_Start
+    CPUburstEndTime=stats->totalTicks;
+    this->endTime=stats->totalTicks;
+
+    //Edited_Assignment2_Stop
+
 
     // Set exit code in parent's structure provided the parent hasn't exited
     if (ppid != -1) {
