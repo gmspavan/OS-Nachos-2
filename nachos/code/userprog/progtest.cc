@@ -30,68 +30,76 @@ void LaunchThreads(char *fileName)
 
   int temp;
 	char a[100];
-	char b[4];
+	char b[4], c[3];
 	int fileName_given = 0;
 	int priority_given = 0;
-	FILE * file;
+  int schedulerType = 0;
+  FILE * file;
 	file = fopen(fileName, "r");
-do
-{
-  //Code for file parsing
-      fileName_given = 0;
-  		priority_given = 0;
-  		int i=0, j=0;
+  temp = fgetc(file);
+  int i=0, j=0;
+  while(!(temp == ' ' || feof(file) || temp=='\n'))
+  {
+      schedulerType = schedulerType*10 + (temp - '0');
       temp = fgetc(file);
-      while(!(temp == ' ' || feof(file) || temp=='\n'))
-  		{
-          *(a+i)=(char)temp;
-      		i++;
-  				temp = fgetc(file);
-  		}
-      if(i!=0){
-  			fileName_given = 1;
-  			*(a+i)='\0';
-      }
-      if(temp == ' '){
-  			while(temp == ' ') temp = fgetc(file);
-  			while(!(temp == ' ' || feof(file) || temp=='\n')){
-  				ASSERT(!(j>2 || (temp>'9' || temp<'0')));
-  				*(b+j)=(char)temp;
-      		j++;
-  				temp = fgetc(file);
-  			}
-  			while(temp == ' ') temp = fgetc(file);
-  			if(j!=0)
-  			{
-  				priority_given = 1;
-  				*(b+j)='\0';
-  			}
-  		}
-      if(priority_given)
-      {
-        int i;
-        for(i=0; *(b+i)!='\0'; i++)
+  }
+  scheduler->setSchedulerAlgo(schedulerType);
+  while(!feof(file))
+  {
+    //Code for file parsing
+        fileName_given = 0;
+    		priority_given = 0;
+        temp = fgetc(file);
+        while(!(temp == ' ' || feof(file) || temp=='\n'))
+    		{
+            *(a+i)=(char)temp;
+        		i++;
+    				temp = fgetc(file);
+    		}
+        if(i!=0){
+    			fileName_given = 1;
+    			*(a+i)='\0';
+        }
+        if(temp == ' '){
+    			while(temp == ' ') temp = fgetc(file);
+    			while(!(temp == ' ' || feof(file) || temp=='\n')){
+    				ASSERT(!(j>2 || (temp>'9' || temp<'0')));
+    				*(b+j)=(char)temp;
+        		j++;
+    				temp = fgetc(file);
+    			}
+    			while(temp == ' ') temp = fgetc(file);
+    			if(j!=0)
+    			{
+    				priority_given = 1;
+    				*(b+j)='\0';
+    			}
+    		}
+        if(priority_given)
         {
-          priority_val = priority_val*10 + (*(b+i)-'0');
+          int i;
+          for(i=0; *(b+i)!='\0'; i++)
+          {
+            priority_val = priority_val*10 + (*(b+i)-'0');
+          }
         }
-      }
-      if(fileName_given)
-      {
-        executable = fileSystem->Open(a);
-        if (executable == NULL) {
-          printf("Unable to open file %s\n", a);
-          return;
-        }
-        tempThread = new NachOSThread(a);
-        space = new ProcessAddressSpace(executable);
-        tempThread->space = space;
-        delete executable;			// close file
-        space->InitUserModeCPURegisters();
-        tempThread->SaveUserState();
-        if(priority_given) tempThread->setPriority(priority_val);
-        tempThread->ThreadFork(ForkStartFunction, 0);     // Make it ready for a later context switch
-        }
-}while(!feof(file));
+        if(fileName_given)
+        {
+          executable = fileSystem->Open(a);
+          if (executable == NULL) {
+            printf("Unable to open file %s\n", a);
+            return;
+          }
+          tempThread = new NachOSThread(a);
+          space = new ProcessAddressSpace(executable);
+          tempThread->space = space;
+          delete executable;			// close file
+          space->InitUserModeCPURegisters();
+          tempThread->SaveUserState();
+          if(priority_given) tempThread->setPriority(priority_val);
+          tempThread->ThreadFork(ForkStartFunction, 0);     // Make it ready for a later context switch
+          }
+  }
 }
 //Edited_Assignment2_Stop
 
