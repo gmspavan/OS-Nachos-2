@@ -31,9 +31,10 @@ ProcessScheduler::ProcessScheduler()
 {
     listOfReadyThreads = new List;
     // Edited_Assignment2_Start
-    scheduler->schedulerAlgo = 1;
+    schedulerAlgo = 1;
     // Edited_Assignment2_Stop
 }
+
 
 // Edited_Assignment2_Start
 int
