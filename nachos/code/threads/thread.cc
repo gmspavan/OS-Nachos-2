@@ -80,6 +80,10 @@ NachOSThread::NachOSThread(char* threadName)
 
     //Edited_Assignment2_Start
     priority = 100;
+    prevEstCPUBurst=0;        //prev estimated CPU burst
+    prevCPUBurst=0;           //prev measured CPU burst
+    startTime=0;
+    endTime=0;
     //Edited_Assignment2_Stop
 }
 
