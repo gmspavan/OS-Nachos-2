@@ -66,7 +66,7 @@ extern void ThreadPrint(int arg);
 
 //Edited_Assignment2_Start
 extern int CPUburstStartTime,CPUburstEndTime;
-
+extern currEstCPUburst;
 //Edited_Assignment2_Stop
 
 
