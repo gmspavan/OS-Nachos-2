@@ -145,10 +145,10 @@ class NachOSThread {
     int getPriority();
     void setPriority(int priority_val);
     int getNextEstCPUBurst();
-    int setNextEstCPUBurst(int nextCPUBurst);
-    int setStartTime(int startTime);
+    void setNextEstCPUBurst(int nextCPUBurst);
+    void setStartTime(int startTime);
     int getStartTime();
-    int setEndTime(int endTime);
+    void setEndTime(int endTime);
     int getEndTime();
 
     //Edited_Assignment2_Stop
