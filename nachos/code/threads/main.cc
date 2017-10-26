@@ -88,11 +88,7 @@ main(int argc, char **argv)
     int argCount;			// the number of arguments
 					// for a particular command
 
-    //Edited_Assignment2_Start
-    char userProgramFileName[100];
-    bool userProgram = false;
-    //Edited_Assignment2_Stop
-
+  
     DEBUG('t', "Entering main");
     (void) Initialize(argc, argv);
 
