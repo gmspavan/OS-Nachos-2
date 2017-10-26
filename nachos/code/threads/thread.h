@@ -66,8 +66,12 @@ extern void ThreadPrint(int arg);
 
 //Edited_Assignment2_Start
 extern int CPUburstStartTime,CPUburstEndTime;
-extern currEstCPUburst;
+<<<<<<< HEAD
+extern int currEstCPUburst;
+=======
+>>>>>>> 38265c4f9bf90ef1439f15728ca08d232ebfa89f
 //Edited_Assignment2_Stop
+
 
 
 // The following class defines a "thread control block" -- which
