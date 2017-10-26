@@ -26,7 +26,7 @@
 
 //Edited_Assignment2_Start
 #define a 0.5
-int currEstCPUburst;
+int currEstCPUburst=0;
 // returns priority value of the thread
 int
 NachOSThread::getPriority()
