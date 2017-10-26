@@ -86,11 +86,9 @@ TimerInterruptHandler(int dummy)
         switch(scheduler->getSchedulerAlgo())
         {
           case 1:
-            printf("Not Happening\n");
             break;
           case 2: break;
           default :
-            printf("contextSwitch Is happening\n");
             interrupt->YieldOnReturn();
         }
 

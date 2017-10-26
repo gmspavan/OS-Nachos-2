@@ -40,6 +40,8 @@ class Statistics {
     int totalCPUbursts;
     int CPUburstlen;
     int totalExecTime;
+    int maxCPUburstlen;
+    int minCPUburstlen;
 //Edited_Assignment2_Stop
 
     Statistics(); 		// initialize everything to zero

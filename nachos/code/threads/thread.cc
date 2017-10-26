@@ -26,6 +26,7 @@
 
 //Edited_Assignment2_Start
 #define a 0.5
+bool firstCPUburst = true;
 int currEstCPUburst;
 // returns priority value of the thread
 int
@@ -284,6 +285,12 @@ NachOSThread::Exit (bool terminateSim, int exitcode)
     //need to update thread completion time list here
     if(CPUburstEndTime - CPUburstStartTime) {
       stats->totalCPUbursts++;    //consider non-zero CPU bursts
+      if((CPUburstEndTime - CPUburstStartTime)>maxCPUburstlen) maxCPUburstlen = (CPUburstEndTime - CPUburstStartTime);
+      if((firstCPUburst) || (CPUburstEndTime - CPUburstStartTime)<minCPUburstlen)
+      {
+        if(firstCPUburst) firstCPUburst = false;
+        minCPUburstlen = (CPUburstEndTime - CPUburstStartTime);
+      }
       stats->CPUburstlen += (CPUburstEndTime - CPUburstStartTime);   //adding CPU bursts for finding CPU utilisation
       this->setNextEstCPUBurst(CPUburstEndTime - CPUburstStartTime);
       //we need to add more stats here like CPU utilisation, error estimation for algo==2

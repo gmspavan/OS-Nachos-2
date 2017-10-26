@@ -76,8 +76,16 @@ ProcessScheduler::MoveThreadToReadyQueue (NachOSThread *thread)
 
     thread->setStatus(READY);
     //Edited_Assignment2_Start
-    if(schedulerAlgo==1) listOfReadyThreads->Append((void *)thread);
-    else listOfReadyThreads->SortedInsert((void *)thread, thread->getPriority());
+    switch(scheduler->getSchedulerAlgo())
+    {
+      case 1 : listOfReadyThreads->Append((void *)thread);
+               break;
+      case 2 : listOfReadyThreads->SortedInsert((void *)thread, thread->getNextEstCPUBurst());
+               break;
+      case 3 : break;
+      case 4 : break;
+      default: break;
+    }
     //Edited_Assignment2_Stop
 }
 

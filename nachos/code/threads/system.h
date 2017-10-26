@@ -42,11 +42,6 @@ extern unsigned thread_index;                  // Index into this array (also us
 extern bool initializedConsoleSemaphores;       // Used to initialize the semaphores for console I/O exactly once
 extern bool exitThreadArray[];          // Marks exited threads
 
-//Edited_Assignment2_Start
-extern int CPUburstStartTime;
-extern int CPUburstEndTime;
-//Edited_Assignment2_Stop
-
 class TimeSortedWaitQueue {             // Needed to implement SysCall_Sleep
 private:
    NachOSThread *t;                           // Thread pointer of the sleeping thread
