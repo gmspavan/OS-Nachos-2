@@ -1,8 +1,8 @@
-// system.h 
+// system.h
 //	All global variables used in Nachos are defined here.
 //
 // Copyright (c) 1992-1993 The Regents of the University of California.
-// All rights reserved.  See copyright.h for copyright notice and limitation 
+// All rights reserved.  See copyright.h for copyright notice and limitation
 // of liability and disclaimer of warranty provisions.
 
 #ifndef SYSTEM_H
@@ -17,6 +17,11 @@
 #include "timer.h"
 
 #define MAX_THREAD_COUNT 1000
+
+//Edited_Assignment2_Start
+extern int CPUburstStartTime;
+extern int CPUburstEndTime;
+//Edited_Assignment2_Stop
 
 // Initialization and cleanup routines
 extern void Initialize(int argc, char **argv); 	// Initialization,
@@ -60,7 +65,7 @@ extern TimeSortedWaitQueue *sleepQueueHead;
 extern Machine* machine;	// user program memory and registers
 #endif
 
-#ifdef FILESYS_NEEDED 		// FILESYS or FILESYS_STUB 
+#ifdef FILESYS_NEEDED 		// FILESYS or FILESYS_STUB
 #include "filesys.h"
 extern FileSystem  *fileSystem;
 #endif
