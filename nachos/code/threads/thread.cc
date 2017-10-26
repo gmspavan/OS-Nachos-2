@@ -407,7 +407,6 @@ NachOSThread::PutThreadToSleep ()
 
     while ((nextThread = scheduler->SelectNextReadyThread()) == NULL)
 	interrupt->Idle();	// no one to run, wait for an interrupt
-
     scheduler->ScheduleThread(nextThread); // returns when we've been signalled
 }
 

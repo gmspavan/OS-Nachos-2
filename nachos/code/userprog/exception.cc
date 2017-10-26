@@ -216,6 +216,7 @@ ExceptionHandler(ExceptionType which)
        machine->WriteRegister(NextPCReg, machine->ReadRegister(NextPCReg)+4);
     }
     else if ((which == SyscallException) && (type == SysCall_PrintChar)) {
+
 	writeDone->P() ;
         console->PutChar(machine->ReadRegister(4));   // echo it!
        // Advance program counters.
