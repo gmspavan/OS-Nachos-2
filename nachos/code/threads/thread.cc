@@ -25,6 +25,7 @@
 					// stack overflows
 
 //Edited_Assignment2_Start
+#define a 0.5
 // returns priority value of the thread
 int
 NachOSThread::getPriority()
@@ -39,21 +40,17 @@ NachOSThread::setPriority(int priority_val)
   this->priority = priority_val;
 }
 int
-NachOSThread::getPrevEstCPUBurst()
+NachOSThread::getNextEstCPUBurst()
 {
-  return this->prevEstCPUBurst;
+  return this->nexEstCPUBurst;
 }
-int
-NachOSThread::setPrevCPUBurst(int prevCPUBurst)
+void
+NachOSThread::setNextEstCPUBurst(int currCPUburst)
 {
-  this->prevCPUBurst=prevCPUBurst;
+  currEstCPUburst=this->nexEstCPUBurst;
+  this->nexEstCPUBurst=(a*currCPUburst+(1-a)*currEstCPUburst);
 }
-int
-NachOSThread::getPrevCPUBurst()
-{
-  return this->prevCPUBurst;
-}
-int
+void
 NachOSThread::setStartTime(int startTime)
 {
   this->startTime=startTime;
@@ -63,7 +60,7 @@ NachOSThread::getStartTime()
 {
   return this->startTime;
 }
-int
+void
 NachOSThread::setEndTime(int endTime)
 {
   this->endTime=endTime;
@@ -116,8 +113,7 @@ NachOSThread::NachOSThread(char* threadName)
 
     //Edited_Assignment2_Start
     priority = 100;
-    prevEstCPUBurst=0;        //prev estimated CPU burst
-    prevCPUBurst=0;           //prev measured CPU burst
+    nexEstCPUBurst=10;
     startTime=0;
     endTime=0;
     //Edited_Assignment2_Stop
@@ -287,7 +283,7 @@ NachOSThread::Exit (bool terminateSim, int exitcode)
     //need to update thread completion time list here
     if(CPUburstEndTime - CPUburstStartTime) {
       stats->totalCPUbursts++;    //consider non-zero CPU bursts
-      this->setPrevCPUBurst(CPUburstEndTime - CPUburstStartTime);
+      this->setNextEstCPUBurst(CPUburstEndTime - CPUburstStartTime);
       //we need to add more stats here like CPU utilisation, error estimation for algo==2
     }
     this->endTime=stats->totalTicks;
@@ -344,6 +340,19 @@ NachOSThread::YieldCPU ()
 
     DEBUG('t', "Yielding thread \"%s\" with pid %d\n", getName(), pid);
 
+    //Edited_Assignment2_Start
+    //do we need to declare these variables??
+    CPUburstEndTime=stats->totalTicks;
+    //need to update thread completion time list here
+    if(CPUburstEndTime - CPUburstStartTime) {
+      stats->totalCPUbursts++;    //consider non-zero CPU bursts
+      this->setNextEstCPUBurst(CPUburstEndTime - CPUburstStartTime);
+      //we need to add more stats here like CPU utilisation, error estimation for algo==2
+    }
+
+   //Edited_Assignment2_Stop
+
+
     nextThread = scheduler->SelectNextReadyThread();
     if (nextThread != NULL) {
 	scheduler->MoveThreadToReadyQueue(this);
@@ -382,6 +391,19 @@ NachOSThread::PutThreadToSleep ()
     DEBUG('t', "Sleeping thread \"%s\" with pid %d\n", getName(), pid);
 
     status = BLOCKED;
+    //Edited_Assignment2_Start
+    //do we need to declare these variables??
+    CPUburstEndTime=stats->totalTicks;
+    //need to update thread completion time list here
+    if(CPUburstEndTime - CPUburstStartTime) {
+      stats->totalCPUbursts++;    //consider non-zero CPU bursts
+      this->setNextEstCPUBurst(CPUburstEndTime - CPUburstStartTime);
+      //we need to add more stats here like CPU utilisation, error estimation for algo==2
+    }
+    //also we need to
+
+   //Edited_Assignment2_Stop
+
     while ((nextThread = scheduler->SelectNextReadyThread()) == NULL)
 	interrupt->Idle();	// no one to run, wait for an interrupt
 
