@@ -283,6 +283,7 @@ NachOSThread::Exit (bool terminateSim, int exitcode)
     //need to update thread completion time list here
     if(CPUburstEndTime - CPUburstStartTime) {
       stats->totalCPUbursts++;    //consider non-zero CPU bursts
+      stats->CPUburstlen += (CPUburstEndTime - CPUburstStartTime);   //adding CPU bursts for finding CPU utilisation
       this->setNextEstCPUBurst(CPUburstEndTime - CPUburstStartTime);
       //we need to add more stats here like CPU utilisation, error estimation for algo==2
     }
@@ -346,6 +347,7 @@ NachOSThread::YieldCPU ()
     //need to update thread completion time list here
     if(CPUburstEndTime - CPUburstStartTime) {
       stats->totalCPUbursts++;    //consider non-zero CPU bursts
+      stats->CPUburstlen += (CPUburstEndTime - CPUburstStartTime);   //adding CPU bursts for finding CPU utilisation
       this->setNextEstCPUBurst(CPUburstEndTime - CPUburstStartTime);
       //we need to add more stats here like CPU utilisation, error estimation for algo==2
     }
@@ -397,6 +399,7 @@ NachOSThread::PutThreadToSleep ()
     //need to update thread completion time list here
     if(CPUburstEndTime - CPUburstStartTime) {
       stats->totalCPUbursts++;    //consider non-zero CPU bursts
+      stats->CPUburstlen += (CPUburstEndTime - CPUburstStartTime);   //adding CPU bursts for finding CPU utilisation
       this->setNextEstCPUBurst(CPUburstEndTime - CPUburstStartTime);
       //we need to add more stats here like CPU utilisation, error estimation for algo==2
     }

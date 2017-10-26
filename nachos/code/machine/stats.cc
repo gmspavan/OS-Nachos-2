@@ -22,7 +22,11 @@ Statistics::Statistics()
     numDiskReads = numDiskWrites = 0;
     numConsoleCharsRead = numConsoleCharsWritten = 0;
     numPageFaults = numPacketsSent = numPacketsRecvd = 0;
+    //Edited_Assignment2_Start
     totalCPUbursts=0;
+    CPUburstlen=0;
+    totalExecTime=0;
+    //Edited_Assignment2_Stop
 }
 
 //----------------------------------------------------------------------
@@ -36,6 +40,9 @@ Statistics::Print()
 {
     printf("Ticks: total %d, idle %d, system %d, user %d\n", totalTicks,
 	idleTicks, systemTicks, userTicks);
+  //Edited_Assignment1_Start
+    printf("CPU utilisation : %f\n",(CPUburstlen/(1.0*totalExecTime)) );
+  //Edited_Assignment2_Stop
     printf("Disk I/O: reads %d, writes %d\n", numDiskReads, numDiskWrites);
     printf("Console I/O: reads %d, writes %d\n", numConsoleCharsRead,
 	numConsoleCharsWritten);
