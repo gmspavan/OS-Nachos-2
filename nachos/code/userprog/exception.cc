@@ -56,6 +56,10 @@ static void WriteDone(int arg) { writeDone->V(); }
 
 extern void LaunchUserProcess (char*);
 
+//Edited_Assignment2_Start
+extern int CPUburstStartTime, CPUburstEndTime;
+//Edited_Assignment2_Stop
+
 void
 ForkStartFunction (int dummy)
 {
