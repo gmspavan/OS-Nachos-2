@@ -18,6 +18,11 @@
 
 #define MAX_THREAD_COUNT 1000
 
+//Edited_Assignment2_Start
+extern int CPUburstStartTime;
+extern int CPUburstEndTime;
+//Edited_Assignment2_Stop
+
 // Initialization and cleanup routines
 extern void Initialize(int argc, char **argv); 	// Initialization,
 						// called before anything else

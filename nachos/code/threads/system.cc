@@ -83,8 +83,14 @@ TimerInterruptHandler(int dummy)
         }
         //printf("[%d] Timer interrupt.\n", stats->totalTicks);
         //Edited_Assignment2_Start
-        if(scheduler->schedulerAlgo!=1)     //so that no context return happens for schedAlgo=1
-        interrupt->YieldOnReturn();
+        switch(scheduler->getSchedulerAlgo())
+        {
+          case 1: break;
+          case 2: break;
+          default : interrupt->YieldOnReturn();
+        }
+
+
         //Edited_Assignment2_Stop
 
     }
