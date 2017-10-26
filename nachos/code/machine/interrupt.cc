@@ -240,6 +240,7 @@ Interrupt::Idle()
 void
 Interrupt::Halt()
 {
+		stats->totalExecTime=stats->totalTicks;
     printf("Machine halting!\n\n");
     stats->Print();
     Cleanup();     // Never returns.
