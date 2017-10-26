@@ -1,8 +1,8 @@
-// system.h 
+// system.h
 //	All global variables used in Nachos are defined here.
 //
 // Copyright (c) 1992-1993 The Regents of the University of California.
-// All rights reserved.  See copyright.h for copyright notice and limitation 
+// All rights reserved.  See copyright.h for copyright notice and limitation
 // of liability and disclaimer of warranty provisions.
 
 #ifndef SYSTEM_H
@@ -37,6 +37,12 @@ extern unsigned thread_index;                  // Index into this array (also us
 extern bool initializedConsoleSemaphores;       // Used to initialize the semaphores for console I/O exactly once
 extern bool exitThreadArray[];          // Marks exited threads
 
+//Edited_Assignment2_Start
+extern int CPUburstStartTime;
+extern int CPUburstEndTime;
+
+//Edited_Assignment2_Stop
+
 class TimeSortedWaitQueue {             // Needed to implement SysCall_Sleep
 private:
    NachOSThread *t;                           // Thread pointer of the sleeping thread
@@ -60,7 +66,7 @@ extern TimeSortedWaitQueue *sleepQueueHead;
 extern Machine* machine;	// user program memory and registers
 #endif
 
-#ifdef FILESYS_NEEDED 		// FILESYS or FILESYS_STUB 
+#ifdef FILESYS_NEEDED 		// FILESYS or FILESYS_STUB
 #include "filesys.h"
 extern FileSystem  *fileSystem;
 #endif

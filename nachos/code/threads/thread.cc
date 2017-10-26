@@ -38,6 +38,42 @@ NachOSThread::setPriority(int priority_val)
 {
   this->priority = priority_val;
 }
+int
+NachOSThread::getPrevEstCPUBurst()
+{
+  return this->prevEstCPUBurst;
+}
+int
+NachOSThread::setPrevCPUBurst(int prevCPUBurst)
+{
+  this->prevCPUBurst=prevCPUBurst;
+}
+int
+NachOSThread::getPrevCPUBurst()
+{
+  return this->prevCPUBurst;
+}
+int
+NachOSThread::setStartTime(int startTime)
+{
+  this->startTime=startTime;
+}
+int
+NachOSThread::getStartTime()
+{
+  return this->startTime;
+}
+int
+NachOSThread::setEndTime(int endTime)
+{
+  this->endTime=endTime;
+}
+int
+NachOSThread::getEndTime()
+{
+  return this->endTime;
+}
+
 //Edited_Assignment2_Stop
 
 //----------------------------------------------------------------------
@@ -246,8 +282,16 @@ NachOSThread::Exit (bool terminateSim, int exitcode)
 
     status = BLOCKED;
     //Edited_Assignment2_Start
+    //updating CPUburstTimes
     CPUburstEndTime=stats->totalTicks;
+    //need to update thread completion time list here
+    if(CPUburstEndTime - CPUburstStartTime) {
+      stats->totalCPUbursts++;    //consider non-zero CPU bursts
+      this->setPrevCPUBurst(CPUburstEndTime - CPUburstStartTime);
+      //we need to add more stats here like CPU utilisation, error estimation for algo==2
+    }
     this->endTime=stats->totalTicks;
+
 
     //Edited_Assignment2_Stop
 

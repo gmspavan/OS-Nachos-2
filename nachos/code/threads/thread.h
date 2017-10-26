@@ -64,6 +64,12 @@ enum ThreadStatus { JUST_CREATED, RUNNING, READY, BLOCKED };
 // external function, dummy routine whose sole job is to call NachOSThread::Print
 extern void ThreadPrint(int arg);
 
+//Edited_Assignment2_Start
+extern int CPUburstStartTime,CPUburstEndTime;
+
+//Edited_Assignment2_Stop
+
+
 // The following class defines a "thread control block" -- which
 // represents a single thread of execution.
 //
@@ -138,11 +144,24 @@ class NachOSThread {
     //Edited_Assignment2_Start
     int getPriority();
     void setPriority(int priority_val);
+    int getPrevEstCPUBurst();
+    int setPrevEstCPUBurst(int prevCPUBurst);
+    int getPrevCPUburst();
+    int setPrevCPUBurst(int prevCPUBurst);
+    int setStartTime(int startTime);
+    int getStartTime();
+    int setEndTime(int endTime);
+    int getEndTime();
+
     //Edited_Assignment2_Stop
 
   private:
     //Edited_Assignment2_Start
     int priority;
+    int prevEstCPUBurst;
+    int prevCPUBurst;
+    int startTime;
+    int endTime;
     //Edited_Assignment2_Stop
     // some of the private data for this class is listed above
 

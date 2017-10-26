@@ -267,6 +267,18 @@ ExceptionHandler(ExceptionType which)
     }
     else if ((which == SyscallException) && (type == SysCall_Sleep)) {
        sleeptime = machine->ReadRegister(4);
+       //Edited_Assignment2_Start
+       //do we need to declare these variables??
+       CPUburstEndTime=stats->totalTicks;
+       //need to update thread completion time list here
+       if(CPUburstEndTime - CPUburstStartTime) {
+         stats->totalCPUbursts++;    //consider non-zero CPU bursts
+         currentThread->setPrevCPUBurst(CPUburstEndTime - CPUburstStartTime);
+         //we need to add more stats here like CPU utilisation, error estimation for algo==2
+       }
+       //also we need to update SortedInsertInWaitQueue to include waiting times in queue
+
+      //Edited_Assignment2_Stop
        if (sleeptime == 0) {
           // emulate a yield
           currentThread->YieldCPU();
