@@ -28,7 +28,6 @@
 #define a 0.5
 <<<<<<< HEAD
 bool firstCPUburst = true;
-int currEstCPUburst;
 =======
 int currEstCPUburst=0;
 >>>>>>> c26e912d99cf5084973977bab24486ea0a7589b4
@@ -289,11 +288,11 @@ NachOSThread::Exit (bool terminateSim, int exitcode)
     //need to update thread completion time list here
     if(CPUburstEndTime - CPUburstStartTime) {
       stats->totalCPUbursts++;    //consider non-zero CPU bursts
-      if((CPUburstEndTime - CPUburstStartTime)>maxCPUburstlen) maxCPUburstlen = (CPUburstEndTime - CPUburstStartTime);
-      if((firstCPUburst) || (CPUburstEndTime - CPUburstStartTime)<minCPUburstlen)
+      if((CPUburstEndTime - CPUburstStartTime)>stats->maxCPUburstlen) stats->maxCPUburstlen = (CPUburstEndTime - CPUburstStartTime);
+      if((firstCPUburst) || (CPUburstEndTime - CPUburstStartTime)<stats->minCPUburstlen)
       {
         if(firstCPUburst) firstCPUburst = false;
-        minCPUburstlen = (CPUburstEndTime - CPUburstStartTime);
+        stats->minCPUburstlen = (CPUburstEndTime - CPUburstStartTime);
       }
       stats->CPUburstlen += (CPUburstEndTime - CPUburstStartTime);   //adding CPU bursts for finding CPU utilisation
       this->setNextEstCPUBurst(CPUburstEndTime - CPUburstStartTime);
