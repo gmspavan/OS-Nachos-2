@@ -28,6 +28,7 @@
 #define a 0.5
 bool firstCPUburst = true;
 int currEstCPUburst=0;
+extern int numThreadsExited;
 // returns priority value of the thread
 int
 NachOSThread::getPriority()
@@ -62,17 +63,6 @@ NachOSThread::getStartTime()
 {
   return this->startTime;
 }
-void
-NachOSThread::setEndTime(int endTime)
-{
-  this->endTime=endTime;
-}
-int
-NachOSThread::getEndTime()
-{
-  return this->endTime;
-}
-
 //Edited_Assignment2_Stop
 
 //----------------------------------------------------------------------
@@ -116,8 +106,10 @@ NachOSThread::NachOSThread(char* threadName)
     //Edited_Assignment2_Start
     priority = 100;
     nexEstCPUBurst=10;
-    startTime=0;
-    endTime=0;
+    startTime=-1; // '-1' so that we can detect while moving to ready queue that this is a newly created thread
+    readyQueueWaitTime=0;
+    readyQueueWaitStartTime=0;
+    readyQueueWaitEndTime=0;
     //Edited_Assignment2_Stop
 }
 
@@ -274,6 +266,16 @@ NachOSThread::Exit (bool terminateSim, int exitcode)
 
     DEBUG('t', "Finishing thread \"%s\" with pid %d\n", getName(), pid);
 
+    //Edited_Assignment2_Start
+    stats->totalreadyQueueWaitTime = stats->totalreadyQueueWaitTime + currentThread->readyQueueWaitTime;
+    int threadCompletionTime = stats->totalTicks - currentThread->getStartTime();
+    if(threadCompletionTime > stats->maxThreadCompletionTime) stats->maxThreadCompletionTime = threadCompletionTime;
+    if((threadCompletionTime < stats->minThreadCompletionTime)||(numThreadsExited==0)) stats->minThreadCompletionTime = threadCompletionTime;
+    stats->sumThreadCompletionTime = stats->sumThreadCompletionTime + threadCompletionTime;
+    stats->sumSqrThreadCompletionTime = stats->sumSqrThreadCompletionTime + threadCompletionTime*threadCompletionTime;
+    numThreadsExited++;
+    //Edited_Assignment2_Stop
+
     threadToBeDestroyed = currentThread;
 
     NachOSThread *nextThread;
@@ -295,8 +297,6 @@ NachOSThread::Exit (bool terminateSim, int exitcode)
       this->setNextEstCPUBurst(CPUburstEndTime - CPUburstStartTime);
       //we need to add more stats here like CPU utilisation, error estimation for algo==2
     }
-    this->endTime=stats->totalTicks;
-
 
     //Edited_Assignment2_Stop
 
@@ -356,6 +356,12 @@ NachOSThread::YieldCPU ()
     if(CPUburstEndTime - CPUburstStartTime) {
       stats->totalCPUbursts++;    //consider non-zero CPU bursts
       stats->CPUburstlen += (CPUburstEndTime - CPUburstStartTime);   //adding CPU bursts for finding CPU utilisation
+      if((CPUburstEndTime - CPUburstStartTime)>stats->maxCPUburstlen) stats->maxCPUburstlen = (CPUburstEndTime - CPUburstStartTime);
+      if((firstCPUburst) || (CPUburstEndTime - CPUburstStartTime)<stats->minCPUburstlen)
+      {
+        if(firstCPUburst) firstCPUburst = false;
+        stats->minCPUburstlen = (CPUburstEndTime - CPUburstStartTime);
+      }
       this->setNextEstCPUBurst(CPUburstEndTime - CPUburstStartTime);
       //we need to add more stats here like CPU utilisation, error estimation for algo==2
     }
@@ -408,6 +414,12 @@ NachOSThread::PutThreadToSleep ()
     if(CPUburstEndTime - CPUburstStartTime) {
       stats->totalCPUbursts++;    //consider non-zero CPU bursts
       stats->CPUburstlen += (CPUburstEndTime - CPUburstStartTime);   //adding CPU bursts for finding CPU utilisation
+      if((CPUburstEndTime - CPUburstStartTime)>stats->maxCPUburstlen) stats->maxCPUburstlen = (CPUburstEndTime - CPUburstStartTime);
+      if((firstCPUburst) || (CPUburstEndTime - CPUburstStartTime)<stats->minCPUburstlen)
+      {
+        if(firstCPUburst) firstCPUburst = false;
+        stats->minCPUburstlen = (CPUburstEndTime - CPUburstStartTime);
+      }
       this->setNextEstCPUBurst(CPUburstEndTime - CPUburstStartTime);
       //we need to add more stats here like CPU utilisation, error estimation for algo==2
     }

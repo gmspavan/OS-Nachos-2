@@ -91,6 +91,11 @@ class NachOSThread {
     int machineState[MachineStateSize];  // all registers except for stackTop
 
   public:
+    //Edited_Assignment2_Start
+    int readyQueueWaitTime;
+    int readyQueueWaitStartTime;
+    int readyQueueWaitEndTime;
+    //Edited_Assignment2_Stop
     NachOSThread(char* debugName);		// initialize a Thread
     ~NachOSThread(); 				// deallocate a Thread
 					// NOTE -- thread being deleted
@@ -160,7 +165,6 @@ class NachOSThread {
     int priority;
     int nexEstCPUBurst;
     int startTime;
-    int endTime;
     //Edited_Assignment2_Stop
     // some of the private data for this class is listed above
 

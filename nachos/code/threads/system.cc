@@ -28,6 +28,7 @@ bool exitThreadArray[MAX_THREAD_COUNT];  //Marks exited threads
 TimeSortedWaitQueue *sleepQueueHead;    // Needed to implement SC_Sleep
 
 //Edited_Assignment2_Start
+int numThreadsExited=0;
 int CPUburstStartTime=0;
 int CPUburstEndTime=0;
 //Edited_Assignment2_Stop

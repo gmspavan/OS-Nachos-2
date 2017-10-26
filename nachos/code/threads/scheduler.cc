@@ -76,6 +76,8 @@ ProcessScheduler::MoveThreadToReadyQueue (NachOSThread *thread)
 
     thread->setStatus(READY);
     //Edited_Assignment2_Start
+    if(thread->getStartTime() == -1) thread->setStartTime(stats->totalTicks);
+    thread->readyQueueWaitStartTime = stats->totalTicks;
     switch(scheduler->getSchedulerAlgo())
     {
       case 1 : listOfReadyThreads->Append((void *)thread);
@@ -136,6 +138,9 @@ ProcessScheduler::ScheduleThread (NachOSThread *nextThread)
     currentThread->setStatus(RUNNING);      // nextThread is now running
 
     //Edited_Assignment2_Start
+    nextThread->readyQueueWaitEndTime = stats->totalTicks;
+    nextThread->readyQueueWaitTime = nextThread->readyQueueWaitTime + (nextThread->readyQueueWaitEndTime - nextThread->readyQueueWaitStartTime);
+    nextThread->readyQueueWaitStartTime = nextThread->readyQueueWaitEndTime; // needed for situations where a thread is scheduled twice without moving to ready queue inbetween
     CPUburstStartTime=stats->totalTicks;
     //Edited_Assignment2_Stop
 

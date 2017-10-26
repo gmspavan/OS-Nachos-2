@@ -42,6 +42,11 @@ class Statistics {
     int totalExecTime;
     int maxCPUburstlen;
     int minCPUburstlen;
+    int totalreadyQueueWaitTime;
+    int maxThreadCompletionTime;
+    int minThreadCompletionTime;
+    long int sumThreadCompletionTime;
+    long long int sumSqrThreadCompletionTime;
 //Edited_Assignment2_Stop
 
     Statistics(); 		// initialize everything to zero
