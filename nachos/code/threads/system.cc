@@ -85,9 +85,13 @@ TimerInterruptHandler(int dummy)
         //Edited_Assignment2_Start
         switch(scheduler->getSchedulerAlgo())
         {
-          case 1: break;
+          case 1:
+            printf("Not Happening\n");
+            break;
           case 2: break;
-          default : interrupt->YieldOnReturn();
+          default :
+            printf("contextSwitch Is happening\n");
+            interrupt->YieldOnReturn();
         }
 
 
