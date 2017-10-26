@@ -38,9 +38,8 @@ extern bool initializedConsoleSemaphores;       // Used to initialize the semaph
 extern bool exitThreadArray[];          // Marks exited threads
 
 //Edited_Assignment2_Start
-extern int CPUburstStartTime;
-extern int CPUburstEndTime;
-
+int CPUburstStartTime;
+int CPUburstEndTime;
 //Edited_Assignment2_Stop
 
 class TimeSortedWaitQueue {             // Needed to implement SysCall_Sleep

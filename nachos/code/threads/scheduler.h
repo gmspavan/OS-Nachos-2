@@ -17,6 +17,11 @@
 // the data structures and operations needed to keep track of which
 // thread is running, and which threads are ready but not running.
 
+//Edited_Assignment2_Start
+extern int CPUburstStartTime;
+//Edited_Assignment2_Stop
+
+
 class ProcessScheduler {
   public:
     ProcessScheduler();			// Initialize list of ready threads
